@@ -1,43 +1,60 @@
-const a = [10, 20, 30, 40, 50];
+let nums = [1, 2, 3, 4, 5, 6, 7];
+console.log(nums.length); // 7
+nums.length = 4;
+console.log(nums); // [ 1, 2, 3, 4 ] (Deletes last 3)
 
-for(let i in a) {
-    console.log(`${i} -> ${a[i]}`);
+console.log(typeof nums); // object
+console.log(nums instanceof Array); // true
+
+for (let i in nums) {
+    console.log(`${i}: ${nums[i]}`);
 }
 
-// Equivale a un bucle foreach clásico
-for(let n of a) {
+for (let n of nums) {
     console.log(n);
 }
 
-a.forEach((n, i) => console.log(`${i} -> ${a[i]}`));
+let str = "abcdefg";
 
-const palabras1 = ["mesa", "silla", "armario"];
-const palabras2 = ["pera", "manzana", "naranja"];
-const palabras3 = palabras1.concat(palabras2, "lápiz", ["boli", "goma"]);
-console.log(palabras3);
-console.log(palabras3.slice(2,5)); // [ 'armario', 'pera', 'manzana' ]
+for (let letter of str) {
+    if (letter.match(/^[aeiou]$/)) {
+        console.log(letter + " es una vocal");
+    } else {
+        console.log(letter + " es una consonante");
+    }
+}
 
-console.log(palabras3.toSpliced(2, 2, "eliminado1", "eliminado2"));
+/** Convertir iterable a array */
+const perro = "perro";
+const perroA = Array.from(perro);
+console.log(perroA); // [ 'p', 'e', 'r', 'r', 'o' ]
+const perroA2 = [...perro];
+console.log(perroA2);
 
-console.log(a.toReversed()); // [ 50, 40, 30, 20, 10 ]
+// Concatenar Arrays
+let a = ["a", "b", "c"];
+let b = ["d", "e", "f"];
+let c = a.concat(b, "g", "h");
+console.log(c); // Imprime ["a", "b", "c", "d", "e", "f", "g", "h"]
+console.log(a); // Imprime ["a", "b", "c"] . El array original no ha sido modificado
 
-console.log("--- ORDENAR ARRAYS ---");
-const nums = [3, 12, 9, 253, 36, 71, 8];
-console.log(nums.toSorted());
-console.log(nums.toSorted((n1, n2) => n1 - n2));
+let c2 = [...a, ...b, "g", "h"];
+console.log(c2); // Imprime ["a", "b", "c", "d", "e", "f", "g", "h"]
 
-console.log("--- OTROS MÉTODOS ---");
-let  arr = [1, 2, 3, 4];
-let arr2 = arr.with(2, 99); // En lugar de hacer a[2] = 99
-console.log(arr); // [1, 2, 3, 4] -> Original
-console.log(arr2); // [1, 2, 99, 4] -> Nuevo array con el cambio
+// Subarray
+let sub = c2.slice(4, 7);
+console.log(sub); // [ 'e', 'f', 'g' ]
 
-console.log(palabras3.map(p => p.length));
+// Modificaciones en posiciones intermedias
 
-console.log("--- SUMA ARRAY ----");
-const numeros = [2, 5, 16, 8, 21];
-const res = numeros.reduce((total, n) => total + n, 0);
-console.log(res); // 52
-const res2 = Math.sumPrecise(numeros); // 52 (método nuevo)
+let nombres = ["Pepe", "Juan", "Marta", "Ana", "David"];
+console.log(nombres.toSpliced(2, 1)); // [ 'Pepe', 'Juan', 'Ana', 'David' ]
+console.log(nombres.toSpliced(2, 0, "Paco")); // [ 'Pepe', 'Juan', 'Paco', 'Marta', 'Ana', 'David' ]
+console.log(nombres.toSpliced(1, 2, "Pedro", "María")); // [ 'Pepe', 'Pedro', 'María', 'Ana', 'David' ]
 
-cons
+const nombreP = nombres
+.toSpliced(1, 2, "Pedro", "María") // Replace "Marta" "Ana"
+.filter((n) => n.startsWith("P")) // Filter names that start with "P"
+.concat("Perico"); // Add "Perico" at the end
+
+console.log(nombreP); // [ 'Pepe', 'Pedro', 'Perico' ]
