@@ -37,3 +37,5 @@ console.log(nums.find(n => n % 2 === 0)); // 14
 
 console.log(words.map(w => Array.from(w)).flat());
 console.log(words.flatMap(w => Array.from(w)));
+
+document.body.append()

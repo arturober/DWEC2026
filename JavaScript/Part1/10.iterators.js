@@ -17,7 +17,7 @@ while (!entry.done) {
 }
 
 const it3 = frutas.values();
-for (fruta of it3) {
+for (let fruta of it3) {
   console.log(fruta);
 }
 
