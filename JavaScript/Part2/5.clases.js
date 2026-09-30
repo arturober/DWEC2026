@@ -36,4 +36,5 @@ console.log(p.edad); // 54 (llamada implícita al getter)
 p.nombre = null;
 console.log(p.nombre); // Pepe
 p.edad = 23; // Llamada implícita al setter
-// p.edad = -4; // Uncaught RangeError RangeError: La edad no puede ser negativa!
+console.log(p.edad);
+//p.edad = -4; // Uncaught RangeError RangeError: La edad no puede ser negativa!
