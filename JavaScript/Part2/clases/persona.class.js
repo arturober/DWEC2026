@@ -4,3 +4,5 @@ export class Persona {
         this.edad = edad;
     }
 }
+
+export const ANONIMO = "Anónimo";
