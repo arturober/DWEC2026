@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .contenedor {
+            display: flex;
+            gap: 2rem;
+        }
+        .elemento {
+            box-sizing: border-box;
+            width: 200px;
+            height: 200px;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .activo {
+            background-color: green;
+            color: white;
+        }
+    </style>
+    <script type="module" src="11.eventos.js"></script>
+</head>
+<body>
+    <div class="contenedor">
+        <div id="div1" class="elemento">
+            Hola
+        </div>
+        <div id="div2" class="elemento">
+            Adiós
+        </div>
+    </div>
+    <p><a href="https://google.es" id="google">Google no va</a></p>
+</body>
+</html>
