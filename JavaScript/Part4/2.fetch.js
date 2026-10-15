@@ -20,6 +20,13 @@ function showProduct(product) {
     style: "currency",
   });
   tr.children[3].textContent = priceFormatter.format(product.price);
+  tr.querySelector(".btn-borrar").addEventListener("click", () => {
+    fetch(`http://localhost:3000/products/${product.id}`, { method: "DELETE" })
+    .then(resp => {
+        if(resp.ok) tr.remove();
+    });
+  });
+
   tbody.append(tr);
 }
 
@@ -55,7 +62,12 @@ formProducto.addEventListener("submit", (e) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(product)
-  }).then(resp => resp.json())
-  .then(json => showProduct(json.product));
+    body: JSON.stringify(product),
+  })
+    .then((resp) => resp.json())
+    .then((json) => {
+        showProduct(json.product)
+        formProducto.reset();
+        imgPreview.src = "";
+    });
 });
