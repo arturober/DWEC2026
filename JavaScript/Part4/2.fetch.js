@@ -69,5 +69,9 @@ formProducto.addEventListener("submit", (e) => {
         showProduct(json.product)
         formProducto.reset();
         imgPreview.src = "";
+    })
+    .catch(e => {
+      alert("Error añadiendo el producto");
+      console.log(e);
     });
 });

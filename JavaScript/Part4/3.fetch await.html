@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="module" src="3.fetch await.js"></script>
+    <style>
+      td {
+        vertical-align: middle;
+        &:first-child img {
+          height: 30px;
+        }
+      }
+
+      form {
+        margin-bottom: 1rem;
+        div {
+            margin-bottom: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <form id="form-producto">
+        <div><input type="text" name="description" placeholder="Descripción"></div>
+        <div><input type="number" name="price" placeholder="Precio"></div>
+        <div>Imagen: <input type="file" name="image" id=""></div>
+        <div><img src="" id="image-preview"></div>
+        <div><button type="submit">Enviar</button></div>
+    </form>
+
+    <table id="tabla-productos">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Descripción</th>
+          <th>Fecha</th>
+          <th>Precio</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <template id="plantilla-producto">
+      <tr>
+        <td><img src="" alt="" srcset="" /></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><button class="btn-borrar">Borrar</button></td>
+      </tr>
+    </template>
+  </body>
+</html>
