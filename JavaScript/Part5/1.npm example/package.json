@@ -1,0 +1,26 @@
+{
+  "name": "1.npm-example",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Arturo",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "hola": "echo \"Hola mundo\"",
+    "start": "lite-server",
+    "test": "eslint src/",
+    "prettier": "prettier -w ."
+  },
+  "dependencies": {
+    "dayjs": "^1.11.23"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
+    "lite-server": "^2.6.1",
+    "prettier": "^3.9.10",
+    "terser": "^5.51.2"
+  }
+}

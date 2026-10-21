@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DWEC - Ejemplo interactivo de Nombre</title>
+
+    <!-- Dependencia opcional desde npm (dayjs) -->
+    <script src="./node_modules/dayjs/dayjs.min.js" defer></script>
+    <script src="./node_modules/dayjs/locale/es.js" defer></script>
+
+    <!-- Script principal del proyecto como módulo ES -->
+    <script type="module" src="./src/index.js"></script>
+
+    <style>
+      :root {
+        --bg-gradient: linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #1e1b4b 50%,
+          #312e81 100%
+        );
+        --card-bg: #ffffff;
+        --card-border: #e2e8f0;
+        --primary: #4f46e5;
+        --primary-hover: #4338ca;
+        --primary-light: #eef2ff;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --accent: #06b6d4;
+        --badge-bg: #f1f5f9;
+        --shadow-lg:
+          0 20px 25px -5px rgba(0, 0, 0, 0.2),
+          0 8px 10px -6px rgba(0, 0, 0, 0.15);
+        --radius: 16px;
+        --radius-sm: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        background: var(--bg-gradient);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px;
+        color: var(--text-main);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 620px;
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-lg);
+        padding: 32px;
+        animation: fadeIn 0.4s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 28px;
+      }
+
+      .badge-dwec {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 4px 10px;
+        background: var(--primary-light);
+        color: var(--primary);
+        border-radius: 9999px;
+        margin-bottom: 8px;
+      }
+
+      header h1 {
+        font-size: 1.85rem;
+        font-weight: 800;
+        color: var(--text-main);
+        margin-bottom: 6px;
+      }
+
+      header p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        margin-bottom: 8px;
+      }
+
+      .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 1.05rem;
+        border: 2px solid var(--card-border);
+        border-radius: var(--radius-sm);
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        background: #f8fafc;
+      }
+
+      input[type="text"]:focus {
+        border-color: var(--primary);
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+      }
+
+      .options-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .select-wrapper {
+        flex: 1;
+        min-width: 160px;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid var(--card-border);
+        background: #ffffff;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        cursor: pointer;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      select:focus {
+        border-color: var(--primary);
+      }
+
+      .button-group {
+        display: flex;
+        gap: 8px;
+      }
+
+      button {
+        padding: 10px 14px;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.15s ease-in-out;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: #ffffff;
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: var(--badge-bg);
+        color: var(--text-main);
+      }
+
+      .btn-secondary:hover {
+        background: #e2e8f0;
+      }
+
+      .btn-clear {
+        background: transparent;
+        color: var(--text-muted);
+        border: 1px solid var(--card-border);
+      }
+
+      .btn-clear:hover {
+        background: #fee2e2;
+        color: #b91c1c;
+        border-color: #fca5a5;
+      }
+
+      /* Área de resultado */
+      .resultado-card {
+        margin-top: 24px;
+        border-top: 2px dashed var(--card-border);
+        padding-top: 24px;
+        min-height: 220px;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 36px 16px;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .empty-state .icon {
+        font-size: 2.4rem;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .saludo-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .avatar {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4f46e5, #06b6d4);
+        color: #ffffff;
+        font-size: 1.6rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+        flex-shrink: 0;
+      }
+
+      .saludo-texto h2 {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        line-height: 1.3;
+        margin-bottom: 4px;
+      }
+
+      .saludo-texto .hora-tag {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* Estadísticas del nombre */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .stat-item {
+        background: #f8fafc;
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius-sm);
+        padding: 10px;
+        text-align: center;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 2px;
+      }
+
+      .stat-value {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--primary);
+        word-break: break-all;
+      }
+
+      .palindromo-alert {
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .quote-box {
+        background: var(--primary-light);
+        border-left: 4px solid var(--primary);
+        padding: 10px 14px;
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        font-size: 0.88rem;
+        font-style: italic;
+        color: #3730a3;
+      }
+
+      footer {
+        margin-top: 24px;
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <span class="badge-dwec">DWEC - JavaScript</span>
+        <h1>Captura de Nombre</h1>
+        <p>
+          Introduce un nombre para ver el saludo personalizado y sus
+          estadísticas
+        </p>
+      </header>
+
+      <form id="formularioNombre" onsubmit="return false;">
+        <div class="form-group">
+          <label for="inputNombre">Nombre de la persona:</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="inputNombre"
+              placeholder="Escribe un nombre (ej. Arturo, Ana, Grace...)"
+              autocomplete="off"
+              autofocus
+            />
+          </div>
+        </div>
+
+        <div class="options-row">
+          <div class="select-wrapper">
+            <select id="selectorTono" title="Selecciona el estilo de saludo">
+              <option value="amistoso">👋 Modo Amistoso</option>
+              <option value="formal">🎩 Modo Formal</option>
+              <option value="pirata">🏴‍☠️ Modo Pirata</option>
+              <option value="cyberpunk">💻 Modo Cyberpunk / Hacker</option>
+            </select>
+          </div>
+
+          <div class="button-group">
+            <button
+              type="button"
+              id="btnSaludar"
+              class="btn-primary"
+              title="Saludar"
+            >
+              <span>✨</span> Saludar
+            </button>
+            <button
+              type="button"
+              id="btnAleatorio"
+              class="btn-secondary"
+              title="Generar nombre aleatorio"
+            >
+              <span>🎲</span> Probar
+            </button>
+            <button
+              type="button"
+              id="btnLimpiar"
+              class="btn-clear"
+              title="Borrar nombre"
+            >
+              <span>🗑️</span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Zona donde se muestra el resultado debajo -->
+      <section
+        class="resultado-card"
+        id="contenedorResultado"
+        aria-live="polite"
+      >
+        <div class="empty-state">
+          <span class="icon">✍️</span>
+          <p>Escribe un nombre arriba para ver el saludo en tiempo real.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p>Desarrollo Web en Entorno Cliente &bull; Vanilla JS + dayjs</p>
+      </footer>
+    </main>
+  </body>
+</html>
