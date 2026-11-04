@@ -1,0 +1,27 @@
+@import "ol/ol.css";
+@import "@geoapify/geocoder-autocomplete/styles/minimal.css";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#map-container {
+  position: relative;
+  container-name: "mapcontainer";
+  container-type: inline-size;
+}
+
+.map {
+  width: 100vw;
+  height: 400px;
+}
+
+.autocomplete-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50cqw;
+  background-color: white;
+  z-index: 100;
+}
