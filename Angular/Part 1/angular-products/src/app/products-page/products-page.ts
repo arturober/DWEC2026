@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Product } from '../interfaces/product';
 import { FormsModule, NgForm } from '@angular/forms';
 
@@ -42,14 +42,16 @@ export class ProductsPage {
 
   protected showImage = true;
 
-  newProduct: Product = {
+  protected newProduct: Product = {
       description: '',
       available: '',
       imageUrl: '',
       rating: 1,
       price: 0
   }
-  imageFile = '';
+  protected imageFile = '';
+
+  #changeDetector = inject(ChangeDetectorRef);
 
   protected toggleImage() {
     this.showImage = !this.showImage;
@@ -62,6 +64,7 @@ export class ProductsPage {
     reader.readAsDataURL(fileInput.files[0]);
     reader.addEventListener('loadend', () => {
       this.newProduct.imageUrl = reader.result as string;
+      this.#changeDetector.markForCheck();
     });
   }
 
