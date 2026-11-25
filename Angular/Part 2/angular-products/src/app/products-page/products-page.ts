@@ -1,16 +1,16 @@
-import { DatePipe, UpperCasePipe } from '@angular/common';
-import { Component, effect, signal } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, computed, effect, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Product } from '../interfaces/product';
-import { IntlCurrencyPipe } from '../pipes/intl-currency-pipe';
+import { ProductForm } from '../product-form/product-form';
+import { ProductItem } from '../product-item/product-item';
 
 @Component({
-  imports: [FormsModule, UpperCasePipe, DatePipe, IntlCurrencyPipe],
+  imports: [FormsModule, ProductItem, ProductForm],
   selector: 'products-page',
   styleUrl: './products-page.css',
   templateUrl: './products-page.html',
 })
-export class ProductsPage {
+export class ProductsPage implements OnInit {
   protected products = signal<Product[]>([
     {
       id: 1,
@@ -47,36 +47,31 @@ export class ProductsPage {
   ]);
 
   protected showImage = signal(true);
+  protected search = signal('');
 
-  protected newProduct = signal<Product>({
-    description: '',
-    available: '',
-    imageUrl: '',
-    rating: 1,
-    price: 0,
-  });
+  protected productsFiltered = computed(() =>
+    this.products().filter((p) =>
+      p.description.toLocaleLowerCase().includes(this.search().toLocaleLowerCase()),
+    ),
+  );
 
   constructor() {
     effect(() => console.log(`Las imágenes se muestran: ${this.showImage()}`));
+  }
+
+  ngOnInit(): void {
+    console.log("Componente products page creado!");
   }
 
   protected toggleImage() {
     this.showImage.update((show) => !show);
   }
 
-  protected changeImage(event: Event) {
-    const fileInput = event.target as HTMLInputElement;
-    if (!fileInput.files?.length) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(fileInput.files[0]);
-    reader.addEventListener('loadend', () => {
-      this.newProduct.update((product) => ({ ...product, imageUrl: reader.result as string }));
-    });
+  protected addProduct(product: Product) {
+    this.products.update((products) => products.concat(product));
   }
 
-  protected addProduct(form: NgForm) {
-    this.products.update((products) => products.concat({ ...this.newProduct() }));
-    form.resetForm();
-    this.newProduct.update((product) => ({ ...product, imageUrl: '' }));
+  protected deleteProduct(product: Product) {
+    this.products.update(products => products.filter(p => p !== product));
   }
 }

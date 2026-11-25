@@ -1,13 +1,6 @@
-td {
-  vertical-align: middle;
-
-  img {
-    height: 40px;
-  }
-}
-
-tr.bg-grey {
-  td {
-    background-color: oklch(96.115% 0.00011 271.152);
-  }
+.headers {
+  font-weight: bold;
+  border-bottom: 1px solid #CCC;
+  border-top: 1px solid #CCC;
+  padding: 5px;
 }
